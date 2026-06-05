@@ -1,6 +1,7 @@
 import type { WireItem } from "@/lib/types";
-import { timeAgo } from "@/lib/util";
+import { isUsableThumbnail, timeAgo } from "@/lib/util";
 import { VoteButton } from "@/components/VoteButton";
+import { Thumb } from "@/components/Thumb";
 
 export function ArticleTile({
   item,
@@ -9,42 +10,62 @@ export function ArticleTile({
   item: WireItem;
   feature?: boolean;
 }) {
+  const hasImage = isUsableThumbnail(item.thumbnail);
+  // The big hero treatment is reserved for the hottest story *that has an image* —
+  // a full-width tile with a giant empty box looks broken (this is the fix).
+  const big = feature && hasImage;
+
+  const badges = (
+    <>
+      {feature ? <Badge tone="breaking">🔥 Hot</Badge> : null}
+      {item.bradMention ? <Badge tone="gold">⭐ Brad</Badge> : null}
+      {item.official ? <Badge tone="official">Official</Badge> : null}
+    </>
+  );
+
   return (
     <article
       className={`group flex flex-col overflow-hidden rounded-2xl border border-edge bg-surface transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_14px_34px_-12px_rgba(0,0,0,0.7)] ${
-        feature ? "sm:col-span-2" : ""
+        big ? "sm:col-span-2" : ""
       }`}
     >
-      <a href={item.url} target="_blank" rel="noopener noreferrer" className="flex flex-1 flex-col">
-        {/* Thumbnail: hotlinked publisher image (no-referrer, lazy) inside a fixed
-            aspect box; falls back to a purple placeholder so a broken image never
-            breaks the grid (DESIGN.md §7). */}
-        <div className="relative flex aspect-[16/9] items-end bg-gradient-to-br from-surface-alt to-[#120c1c] p-3">
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_120%_at_0%_0%,rgba(139,92,246,0.32),transparent_60%)]"
-          />
-          {item.thumbnail ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={item.thumbnail}
-              alt=""
-              loading="lazy"
-              referrerPolicy="no-referrer"
-              className="absolute inset-0 h-full w-full object-cover"
+      <a
+        href={item.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-1 flex-col"
+      >
+        {hasImage ? (
+          <div
+            className={`relative flex items-end bg-gradient-to-br from-surface-alt to-[#120c1c] p-3 ${
+              big ? "aspect-[16/9] sm:aspect-[21/9]" : "aspect-[16/9]"
+            }`}
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_120%_at_0%_0%,rgba(139,92,246,0.32),transparent_60%)]"
             />
-          ) : null}
-          <div className="absolute left-3 top-3 flex gap-1.5">
-            {feature ? <Badge tone="breaking">🔥 Hot</Badge> : null}
-            {item.bradMention ? <Badge tone="gold">⭐ Brad</Badge> : null}
-            {item.official ? <Badge tone="official">Official</Badge> : null}
+            <Thumb src={item.thumbnail!} />
+            <div className="absolute left-3 top-3 flex gap-1.5">{badges}</div>
+            <span className="relative rounded-full border border-edge bg-bg/60 px-2.5 py-1 text-[11px] font-bold text-ink backdrop-blur-sm">
+              {item.source}
+            </span>
           </div>
-          <span className="relative rounded-full border border-edge bg-bg/60 px-2.5 py-1 text-[11px] font-bold text-ink backdrop-blur-sm">
-            {item.source}
-          </span>
-        </div>
+        ) : null}
 
-        <div className="flex flex-1 flex-col px-4 pb-2 pt-3">
+        <div className="flex flex-1 flex-col px-4 pb-2 pt-3.5">
+          {/* No-image tiles carry the source + badges in a compact header row
+              instead of a big empty thumbnail block. */}
+          {!hasImage ? (
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              {badges}
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+                {item.source}
+              </span>
+            </div>
+          ) : null}
+
           {item.topic ? (
             <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-accent-hover">
               {item.topic}
@@ -52,7 +73,7 @@ export function ArticleTile({
           ) : null}
           <h3
             className={`mb-1.5 font-bold leading-snug tracking-tight ${
-              feature ? "text-xl" : "text-base"
+              big ? "text-xl" : "text-base"
             }`}
           >
             {item.title}

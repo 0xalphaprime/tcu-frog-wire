@@ -57,6 +57,34 @@ export function excerptOf(s: string, n = 280): string {
   return t.length > n ? `${t.slice(0, n - 1).trimEnd()}…` : t;
 }
 
+const THUMB_DENY =
+  /doubleclick|googlesyndication|google-analytics|\/pixel|[/_-]1x1|spacer|blank\.|transparent\.|\/ads?\/|beacon|gravatar|s\.w\.org|feedburner/i;
+const THUMB_EXT = /\.(jpe?g|png|webp|avif)(\?|$)/i;
+
+/**
+ * Heuristic "sniff test" for a thumbnail URL — no network. Only let a tile show
+ * an image we're fairly sure is a real, sizeable picture: must be an http(s)
+ * raster image (jpg/png/webp/avif, not .svg/.gif icons), not a tracking pixel /
+ * spacer / ad / avatar, and not flagged tiny by a width/height query param.
+ */
+export function isUsableThumbnail(url?: string | null): url is string {
+  if (!url) return false;
+  let u: URL;
+  try {
+    u = new URL(url);
+  } catch {
+    return false;
+  }
+  if (u.protocol !== "https:" && u.protocol !== "http:") return false;
+  if (THUMB_DENY.test(url)) return false;
+  if (!THUMB_EXT.test(u.pathname)) return false;
+  for (const k of ["w", "width", "h", "height"]) {
+    const v = Number(u.searchParams.get(k));
+    if (v && v < 200) return false;
+  }
+  return true;
+}
+
 export function timeAgo(iso: string, now = Date.now()): string {
   const diff = Math.max(0, now - Date.parse(iso));
   const m = Math.floor(diff / 60000);

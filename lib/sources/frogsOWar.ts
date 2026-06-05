@@ -14,6 +14,7 @@ import {
   classifyTopic,
   excerptOf,
   hashId,
+  isUsableThumbnail,
   mentionsBrad,
   sourceWeight,
 } from "@/lib/util";
@@ -88,7 +89,8 @@ export async function fetchFrogsOWar(feed = FEED): Promise<WireItem[]> {
 
     const summary = textOf(e.summary);
     const body = textOf(e.content); // read for the image only, then dropped
-    const thumbnail = firstImg(summary) ?? firstImg(body);
+    const rawThumb = firstImg(summary) ?? firstImg(body);
+    const thumbnail = isUsableThumbnail(rawThumb) ? rawThumb : undefined;
     const author = Array.isArray(e.author) ? e.author[0]?.name : e.author?.name;
     const when = e.published || e.updated;
     const publishedAt = when ? new Date(when).toISOString() : new Date().toISOString();
