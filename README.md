@@ -48,7 +48,8 @@ npm run typecheck   # tsc --noEmit — the canary (no test suite)
 
 - `GET /api/cron/ingest` — fetch + store (Vercel Cron `*/5`).
 - `GET /api/cron/daily-brief` — ingest + (re)build the brief (`0 9 * * *` UTC ≈ 4 AM CT).
-- `GET /api/refresh` — manual "Refresh now" button (game-day freshness on any plan).
+- `GET /api/refresh` — public, rate-limited "Refresh now" button (a 60s Redis lock;
+  the scheduled cron routes above stay `CRON_SECRET`-protected).
 
 ## The one rule (copyright boundary)
 
