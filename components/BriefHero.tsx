@@ -71,7 +71,7 @@ export function BriefHero({ brief, game }: { brief: BriefDoc; game?: NextGame })
               Next Game
             </div>
             <div className="mt-1 text-lg font-extrabold leading-tight">
-              vs {game.opponent}
+              {game.home ? "vs" : "at"} {game.opponent}
             </div>
             <div className="mt-0.5 text-xs text-muted">{game.venue}</div>
           </div>

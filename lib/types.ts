@@ -70,6 +70,7 @@ export type BriefFacts = {
 export type NextGame = {
   opponent: string;
   date: string; // ISO date
+  home: boolean; // true for home + neutral-site (TCU as designated home); false = away
   venue: string;
   note?: string;
   daysUntil: number;
