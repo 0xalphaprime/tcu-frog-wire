@@ -35,7 +35,8 @@ npm run typecheck   # tsc --noEmit — the canary (no test suite)
 ## How it works
 
 - **Ingest** (`lib/ingest.ts` → `lib/sources/*`): fetch sources in parallel (fault-tolerant),
-  normalize → merge the same story across sources → store in Redis (14-day TTL, auto-prunes).
+  normalize → keep **football only** (other TCU sports filtered out) → merge the same story
+  across sources → store in Redis (14-day TTL, auto-prunes).
   Ships **Google News RSS** + **Frogs O' War** (Atom). Each source is just a function returning
   `WireItem[]`; add YouTube RSS / Reddit-OAuth as new entries in `SOURCES`.
 - **Daily brief** (`lib/brief/*`): rank facts → **Claude writes it** → **deterministic fallback**

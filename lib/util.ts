@@ -206,6 +206,26 @@ export function mentionsBrad(text: string): boolean {
   return /\brobbins\b/i.test(text);
 }
 
+const OTHER_SPORT =
+  /\b(basketball|hoops|baseball|softball|volleyball|soccer|golf|tennis|track and field|cross country|swimming|gymnastics|equestrian|rifle|rowing|wrestling)\b/i;
+const FOOTBALL_TERMS =
+  /\b(football|quarterbacks?|qbs?|gridiron|sonny dykes|kickoff|touchdowns?|fall camp|spring game|depth chart|offensive line|defensive line|wide receivers?|running backs?|linebackers?|tight end)\b/i;
+
+/**
+ * Football-only gate. Frogs O' War's feed (and the occasional Google News hit)
+ * cover all TCU sports — keep football, drop the rest. Article categories are the
+ * strongest signal (Frogs O' War tags posts "TCU Football" / "Basketball" / …);
+ * otherwise drop only items that clearly name another sport and never mention
+ * football, so football pieces without the literal word "football" still pass.
+ */
+export function isFootball(text: string, categories: string[] = []): boolean {
+  if (categories.some((c) => /football/i.test(c))) return true;
+  if (categories.some((c) => OTHER_SPORT.test(c))) return false;
+  const t = text.toLowerCase();
+  if (OTHER_SPORT.test(t) && !FOOTBALL_TERMS.test(t)) return false;
+  return true;
+}
+
 /** YYYY-MM-DD in America/Chicago (TCU is in Fort Worth, the family's TZ). */
 export function todayCentral(now = new Date()): string {
   return new Intl.DateTimeFormat("en-CA", {

@@ -15,6 +15,7 @@ import {
   classifyTopic,
   excerptOf,
   hashId,
+  isFootball,
   mentionsBrad,
   sourceWeight,
 } from "@/lib/util";
@@ -71,6 +72,7 @@ export async function fetchGoogleNews(feed = process.env.GOOGLE_NEWS_FEED || DEF
     const canon = canonicalUrl(link);
     const publishedAt = r.pubDate ? new Date(r.pubDate).toISOString() : new Date().toISOString();
     const text = `${title} ${r.description || ""}`;
+    if (!isFootball(text)) continue; // football only
 
     items.push({
       id: hashId(canon),

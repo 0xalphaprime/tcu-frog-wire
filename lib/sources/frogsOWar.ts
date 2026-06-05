@@ -14,6 +14,7 @@ import {
   classifyTopic,
   excerptOf,
   hashId,
+  isFootball,
   isUsableThumbnail,
   mentionsBrad,
   sourceWeight,
@@ -69,6 +70,7 @@ type Entry = {
   published?: string;
   updated?: string;
   author?: { name?: string } | { name?: string }[];
+  category?: { "@_term"?: string } | { "@_term"?: string }[];
 };
 
 export async function fetchFrogsOWar(feed = FEED): Promise<WireItem[]> {
@@ -88,6 +90,12 @@ export async function fetchFrogsOWar(feed = FEED): Promise<WireItem[]> {
     if (!url || !title) continue;
 
     const summary = textOf(e.summary);
+    const categories = asArray(e.category)
+      .map((c) => c?.["@_term"] ?? "")
+      .filter(Boolean);
+    if (!isFootball(`${title} ${summary}`, categories)) continue; // football only
+
+
     const body = textOf(e.content); // read for the image only, then dropped
     const rawThumb = firstImg(summary) ?? firstImg(body);
     const thumbnail = isUsableThumbnail(rawThumb) ? rawThumb : undefined;
