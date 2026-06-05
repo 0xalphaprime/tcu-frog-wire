@@ -69,13 +69,20 @@ export type BriefFacts = {
   nextGame?: NextGame;
 };
 
+/** A scheduled game. Raw entries omit the computed fields (see lib/nextGame). */
 export type NextGame = {
   opponent: string;
-  date: string; // ISO date
+  date: string; // ISO date (time is a placeholder for sorting unless kickoff is set)
   home: boolean; // true for home + neutral-site (TCU as designated home); false = away
   venue: string;
+  kickoff?: string; // confirmed kickoff, e.g. "11:00 AM CT"; undefined = TBD
   note?: string;
+  // ---- computed by fullSchedule() ----
   daysUntil: number;
+  isPast: boolean;
+  isNext: boolean;
+  dateLabel: string; // "Sat, Aug 29" (America/Chicago)
+  kickoffLabel: string; // kickoff or "Time TBD"
 };
 
 /** Per-source health, surfaced to the owner so dead feeds don't fail silently. */

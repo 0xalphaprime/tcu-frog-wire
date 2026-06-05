@@ -4,7 +4,7 @@ import { FilterChips, FILTERS, type FilterKey } from "@/components/FilterChips";
 import { Wire } from "@/components/Wire";
 import { getOrBuildTodayBrief } from "@/lib/brief/today";
 import { ensureSeeded, getItems } from "@/lib/store";
-import { nextGame } from "@/lib/nextGame";
+import { fullSchedule } from "@/lib/nextGame";
 import { hotness } from "@/lib/util";
 import type { WireItem } from "@/lib/types";
 
@@ -40,7 +40,7 @@ export default async function Home({
     : "hot";
 
   await ensureSeeded();
-  const game = nextGame();
+  const schedule = fullSchedule();
   const [brief, allItems] = await Promise.all([getOrBuildTodayBrief(), getItems()]);
 
   const now = Date.now();
@@ -55,7 +55,7 @@ export default async function Home({
     <div className="min-h-screen">
       <Header />
       <main className="pt-2">
-        <BriefHero brief={brief} game={game} />
+        <BriefHero brief={brief} schedule={schedule} />
         <div className="mt-5">
           <FilterChips active={active} />
         </div>

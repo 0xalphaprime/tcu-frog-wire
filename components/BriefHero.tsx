@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import type { BriefDoc, NextGame } from "@/lib/types";
 import { briefToMarkdown } from "@/lib/brief/build";
+import { ScheduleDropdown } from "@/components/ScheduleDropdown";
 
 function formatDate(date: string): string {
   const d = new Date(`${date}T12:00:00`);
@@ -14,8 +15,9 @@ function formatDate(date: string): string {
   }).format(d);
 }
 
-export function BriefHero({ brief, game }: { brief: BriefDoc; game?: NextGame }) {
+export function BriefHero({ brief, schedule }: { brief: BriefDoc; schedule: NextGame[] }) {
   const topLinks = brief.topLinks ?? [];
+  const game = schedule.find((g) => g.isNext);
   return (
     <section className="mx-auto max-w-4xl px-5 sm:px-8">
       <div className="relative overflow-hidden rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/15 to-accent/[0.04] px-5 pb-5 pt-5 shadow-[0_8px_40px_-10px_rgba(139,92,246,0.35)]">
@@ -95,31 +97,29 @@ export function BriefHero({ brief, game }: { brief: BriefDoc; game?: NextGame })
         </div>
       </div>
 
-      {game ? (
-        <div className="mt-3 grid grid-cols-2 gap-3">
-          <div className="rounded-xl border border-edge bg-surface px-4 py-3">
-            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted">
-              Next Game
-            </div>
-            <div className="mt-1 text-lg font-extrabold leading-tight">
-              {game.home ? "vs" : "at"} {game.opponent}
-            </div>
-            <div className="mt-0.5 text-xs text-muted">{game.venue}</div>
-          </div>
-          <div className="rounded-xl border border-edge bg-surface px-4 py-3">
-            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted">
-              Countdown
-            </div>
-            <div className="mt-1 font-mono text-lg font-extrabold">
-              {game.daysUntil} days
-            </div>
-            {game.note ? (
-              <div className="mt-0.5 truncate text-xs text-muted" title={game.note}>
-                {game.note}
+      {schedule.length > 0 ? (
+        game ? (
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <ScheduleDropdown schedule={schedule} />
+            <div className="rounded-xl border border-edge bg-surface px-4 py-3">
+              <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted">
+                Countdown
               </div>
-            ) : null}
+              <div className="mt-1 font-mono text-lg font-extrabold">
+                {game.daysUntil} days
+              </div>
+              {game.note ? (
+                <div className="mt-0.5 truncate text-xs text-muted" title={game.note}>
+                  {game.note}
+                </div>
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="mt-3">
+            <ScheduleDropdown schedule={schedule} />
+          </div>
+        )
       ) : null}
     </section>
   );
