@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>robbins.coach — Frog Wire (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
+<style>
+  /* ---- TCU dark palette (grounded from brand.tcu.edu) ---- */
+  :root{
+    --bg:#0E0A14;          /* near-black, softened from TCU Black */
+    --surface:#171120;
+    --surface-alt:#211833;
+    --text:#F4F1F8;
+    --muted:#A3A9AC;       /* official Horned Frog Grey, PMS 429 */
+    --accent:#8B5CF6;      /* TCU Purple #4D1979 brightened for dark legibility */
+    --accent-hover:#A78BFA;
+    --accent-deep:#4D1979; /* official TCU Purple, PMS 268 */
+    --border:#2C2440;
+    --gold:#F9D44B;        /* "Bold & Vibrant" — top-story marker only */
+    --red:#E5484D;         /* breaking only */
+    --green:#3FB950;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"DM Sans",ui-sans-serif,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .mono{font-family:"DM Mono",ui-monospace,monospace}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:980px;margin:0 auto;padding:0 18px}
+
+  /* ---- header ---- */
+  header{padding:calc(env(safe-area-inset-top) + 22px) 0 14px}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .dot{height:26px;width:26px;border-radius:999px;background:var(--accent);
+       box-shadow:0 0 24px rgba(139,92,246,.65);flex:0 0 auto}
+  .word{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:20px}
+  .word small{display:block;letter-spacing:.18em;font-size:10px;color:var(--muted);font-weight:600}
+  .signout{border:1px solid var(--border);background:var(--surface);color:var(--muted);
+           border-radius:999px;padding:0 16px;min-height:40px;display:inline-flex;align-items:center;
+           font-size:12px;font-weight:600}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:14px 0}
+
+  /* ---- hero: the daily brief ---- */
+  .hero{position:relative;overflow:hidden;border-radius:16px;padding:22px 20px 18px;
+        background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(139,92,246,.04));
+        border:1px solid rgba(139,92,246,.32);
+        box-shadow:0 8px 40px -10px rgba(139,92,246,.35)}
+  .hero .bloom{position:absolute;left:-40px;top:-30px;height:200px;width:200px;border-radius:999px;
+        background:rgba(139,92,246,.22);filter:blur(46px);pointer-events:none}
+  .kicker{position:relative;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .pill{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+        padding:5px 10px;border-radius:999px;background:var(--accent);color:#150d22}
+  .pill.ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+  .count{font-family:"DM Mono";font-size:12px;color:var(--muted)}
+  .hero h1{position:relative;margin:0 0 6px;font-size:23px;line-height:1.25;font-weight:800;letter-spacing:-.01em}
+  .hero .read{position:relative;margin:0;color:#E7E1F2;font-size:15px;max-width:62ch}
+  .hero .meta{position:relative;margin-top:14px;display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+  .hero .meta b{color:var(--text)}
+  .cta{position:relative;margin-top:16px;display:inline-flex;align-items:center;gap:8px;
+       color:var(--accent-hover);font-weight:700;font-size:14px}
+
+  /* ---- next game strip ---- */
+  .next{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .card{position:relative;overflow:hidden;border-radius:14px;background:var(--surface);
+        border:1px solid var(--border);padding:14px 16px}
+  .card .label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+  .card .big{font-size:20px;font-weight:800;margin-top:4px}
+  .card .sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+  /* ---- filter chips ---- */
+  .filters{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px;margin:8px -2px 0;
+           scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center;gap:7px;
+        padding:0 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface);
+        color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .chip.active{background:var(--accent);border-color:var(--accent);color:#150d22}
+  .chip.brad{border-color:rgba(249,212,75,.45);color:var(--gold)}
+  .chip.brad.active{background:var(--gold);color:#241c06;border-color:var(--gold)}
+
+  /* ---- section label ---- */
+  .seclabel{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 12px}
+  .seclabel h2{margin:0;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+  .sort{font-size:12px;color:var(--muted)}
+  .sort b{color:var(--accent-hover)}
+
+  /* ---- article tiles ---- */
+  .grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:680px){.grid{grid-template-columns:1fr 1fr}}
+  .tile{position:relative;display:flex;gap:0;flex-direction:column;border-radius:16px;overflow:hidden;
+        background:var(--surface);border:1px solid var(--border);transition:transform .15s,box-shadow .15s,border-color .15s}
+  .tile:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(0,0,0,.7);border-color:rgba(139,92,246,.4)}
+  .tile.feature{grid-column:1 / -1}
+  .thumb{aspect-ratio:16/9;background:
+        radial-gradient(120% 120% at 0% 0%,rgba(139,92,246,.35),transparent 60%),
+        linear-gradient(135deg,var(--surface-alt),#120c1c);
+        position:relative;display:flex;align-items:flex-end;padding:12px}
+  .thumb .src{font-size:11px;font-weight:700;color:#EfeAf8;background:rgba(14,10,20,.6);
+        border:1px solid var(--border);backdrop-filter:blur(4px);padding:4px 9px;border-radius:999px}
+  .topbadge{position:absolute;top:12px;left:12px;display:flex;gap:6px}
+  .badge{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:6px}
+  .badge.official{background:rgba(63,185,80,.16);color:#7EE787;border:1px solid rgba(63,185,80,.35)}
+  .badge.brad{background:var(--gold);color:#241c06}
+  .badge.hot{background:rgba(229,72,77,.16);color:#FF8A8E;border:1px solid rgba(229,72,77,.4)}
+  .body{padding:14px 16px 8px;flex:1;display:flex;flex-direction:column}
+  .topic{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-hover);margin-bottom:6px}
+  .tile h3{margin:0 0 6px;font-size:16px;font-weight:700;line-height:1.3;letter-spacing:-.01em}
+  .tile.feature h3{font-size:20px}
+  .excerpt{margin:0;color:var(--muted);font-size:13px;flex:1}
+  .foot{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 12px 16px}
+  .ago{font-family:"DM Mono";font-size:11px;color:var(--muted)}
+  .vote{display:flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--surface-alt);
+        border-radius:999px;padding:0 12px;min-height:38px;color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;
+        transition:all .12s}
+  .vote:hover{border-color:var(--accent);color:var(--accent-hover)}
+  .vote.on{background:rgba(139,92,246,.18);border-color:var(--accent);color:var(--accent-hover)}
+  .vote .arrow{font-size:14px;line-height:1}
+  .vote .n{font-family:"DM Mono"}
+
+  footer{color:var(--muted);font-size:12px;text-align:center;padding:30px 0 40px;line-height:1.7}
+  footer .disc{color:#6f6880;font-size:11px;max-width:52ch;margin:6px auto 0}
+  .note{max-width:980px;margin:18px auto 0;padding:0 18px}
+  .note .box{border:1px dashed var(--border);border-radius:12px;padding:12px 14px;color:var(--muted);font-size:12px;background:rgba(33,24,51,.35)}
+  .note .box b{color:var(--accent-hover)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="bar">
+        <div class="brand">
+          <span class="dot"></span>
+          <span class="word">Frog Wire<small>robbins.coach</small></span>
+        </div>
+        <a class="signout" href="#">Sign out</a>
+      </div>
+      <div class="rule"></div>
+    </header>
+
+    <!-- HERO: the daily brief -->
+    <section class="hero">
+      <span class="bloom"></span>
+      <div class="kicker">
+        <span class="pill">Today's Brief</span>
+        <span class="pill ghost">Thu · Jun 4, 2026 · 4:00 AM</span>
+        <span class="count">86 days to kickoff in Dublin</span>
+      </div>
+      <h1>TCU's whole 2026 identity is an offensive reset.</h1>
+      <p class="read">New coordinator, new quarterback, new QB coach (cousin <b style="color:var(--gold)">Brad Robbins</b>) — and one stated mission: stop turning the ball over. The fanbase is cautiously bullish: <i>"dangerous sleeper," not "favorite."</i> Harvard transfer Jaden Craig is the intended starter; observers kept calling his spring process "smooth."</p>
+      <div class="meta">
+        <span><b>5</b> new stories overnight</span>
+        <span><b>1</b> Brad mention</span>
+        <span>Hottest: <b>Big 12 sleeper</b> buzz</span>
+      </div>
+      <a class="cta" href="#">Read the full 2-minute brief →</a>
+    </section>
+
+    <div class="next">
+      <div class="card">
+        <div class="label">Next Game</div>
+        <div class="big">vs North Carolina</div>
+        <div class="sub">Aug 29 · Aviva Stadium, Dublin 🇮🇪 · Belichick's debut</div>
+      </div>
+      <div class="card">
+        <div class="label">Countdown</div>
+        <div class="big mono">86 days</div>
+        <div class="sub">First-ever Week Zero game for the Frogs</div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+      <button class="chip active">🔥 Hottest</button>
+      <button class="chip">🕐 Newest</button>
+      <button class="chip brad">⭐ Brad tracker</button>
+      <button class="chip">Offense</button>
+      <button class="chip">Recruiting</button>
+      <button class="chip">Schedule</button>
+      <button class="chip">Official only</button>
+    </div>
+
+    <div class="seclabel">
+      <h2>The Wire</h2>
+      <span class="sort">Sorted by <b>hotness</b> · recency + corroboration + buzz</span>
+    </div>
+
+    <!-- TILES -->
+    <div class="grid">
+
+      <article class="tile feature">
+        <div class="thumb">
+          <div class="topbadge"><span class="badge hot">🔥 Hot</span></div>
+          <span class="src">Dave Campbell's Texas Football</span>
+        </div>
+        <div class="body">
+          <div class="topic">Offense · X's &amp; O's</div>
+          <h3>Why Sonny Dykes Is Betting Big on an Offensive Reset in 2026</h3>
+          <p class="excerpt">Dykes tore down the Air Raid-leaning attack for balance — more snaps under center and out of the pistol, with ball security borrowed from the UConn model… <span style="color:#6f6880">(teaser only — links out)</span></p>
+        </div>
+        <div class="foot">
+          <span class="ago">3h ago · also covered by 2 outlets</span>
+          <button class="vote on"><span class="arrow">▲</span><span class="n">14</span></button>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="thumb">
+          <div class="topbadge"><span class="badge brad">⭐ Brad</span><span class="badge official">Official</span></div>
+          <span class="src">TCU Athletics</span>
+        </div>
+        <div class="body">
+          <div class="topic">Coaching staff</div>
+          <h3>Robbins Tabbed to Lead Frog Quarterbacks in 2026</h3>
+          <p class="excerpt">Brad Robbins joins from Tulsa, reuniting with OC Gordon Sammis — the two built UConn's 2024 offense together…</p>
+        </div>
+        <div class="foot">
+          <span class="ago">1d ago</span>
+          <button class="vote"><span class="arrow">▲</span><span class="n">9</span></button>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="thumb">
+          <div class="topbadge"><span class="badge hot">🔥 Hot</span></div>
+          <span class="src">Sports Illustrated</span>
+        </div>
+        <div class="body">
+          <div class="topic">Quarterback</div>
+          <h3>Jaden Craig Could Fix TCU's Turnover Problem — But There's One Big Question</h3>
+          <p class="excerpt">A 52:12 career TD-to-INT ratio and a 1.68% pick rate. The open question: does Ivy efficiency scale against Big 12 speed?</p>
+        </div>
+        <div class="foot">
+          <span class="ago">6h ago</span>
+          <button class="vote"><span class="arrow">▲</span><span class="n">11</span></button>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="thumb">
+          <div class="topbadge"><span class="badge" style="background:rgba(139,92,246,.18);color:var(--accent-hover);border:1px solid rgba(139,92,246,.4)">r/CFB buzz</span></div>
+          <span class="src">Roundtable</span>
+        </div>
+        <div class="body">
+          <div class="topic">Fan pulse</div>
+          <h3>TCU Is A Dangerous Big 12 Sleeper In 2026</h3>
+          <p class="excerpt">Title odds around +1900 — writers read it as sleeper value. The recurring fan logic: good enough to matter, overlooked enough to strike.</p>
+        </div>
+        <div class="foot">
+          <span class="ago">9h ago · 240 upvotes on r/CFB</span>
+          <button class="vote"><span class="arrow">▲</span><span class="n">7</span></button>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="thumb">
+          <div class="topbadge"><span class="badge" style="background:rgba(249,212,75,.16);color:var(--gold);border:1px solid rgba(249,212,75,.4)">Schedule</span></div>
+          <span class="src">Aer Lingus Classic</span>
+        </div>
+        <div class="body">
+          <div class="topic">Season opener</div>
+          <h3>TCU and UNC to Kick Off in Dublin</h3>
+          <p class="excerpt">TCU is the designated home team, abroad for the first time. Storyline magnet: UNC is now coached by Bill Belichick.</p>
+        </div>
+        <div class="foot">
+          <span class="ago">2d ago</span>
+          <button class="vote"><span class="arrow">▲</span><span class="n">5</span></button>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="thumb">
+          <div class="topbadge"><span class="badge" style="background:var(--surface-alt);color:var(--muted);border:1px solid var(--border)">Recruiting</span></div>
+          <span class="src">247Sports</span>
+        </div>
+        <div class="body">
+          <div class="topic">Spring camp</div>
+          <h3>TCU QB Jaden Craig Recaps Performance From Spring Camp</h3>
+          <p class="excerpt">Strong reviews across 15 spring practices. The staff says he brings a running dimension the QB room "hasn't had."</p>
+        </div>
+        <div class="foot">
+          <span class="ago">1d ago</span>
+          <button class="vote"><span class="arrow">▲</span><span class="n">4</span></button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <div class="note">
+    <div class="box">
+      <b>Mockup notes:</b> Colors are TCU's real palette (Horned Frog Purple #4D1979, brightened to #8B5CF6 for dark-mode legibility; Horned Frog Grey #A3A9AC for metadata). Excerpts are deliberately short teasers that link out — the build stores only headline + ~300-char excerpt + link + attribution, never full article text. "Brad tracker" is a saved keyword filter. Layout is a responsive `grid-cols-1 → sm:grid-cols-2` tile pattern.
+    </div>
+  </div>
+
+  <footer>
+    Frog Wire · robbins.coach · updated daily at 4:00 AM CT
+    <div class="disc">An unofficial fan site for the Robbins family. Not affiliated with, endorsed by, or sponsored by Texas Christian University. All articles link to and credit their original publishers.</div>
+  </footer>
+
+  <script>
+    // toy interactivity so the mockup feels alive
+    document.querySelectorAll('.vote').forEach(function(b){
+      b.addEventListener('click',function(){
+        var n=b.querySelector('.n'); var v=parseInt(n.textContent,10);
+        if(b.classList.toggle('on')){n.textContent=v+1}else{n.textContent=v-1}
+      });
+    });
+    document.querySelectorAll('.filters .chip').forEach(function(c){
+      c.addEventListener('click',function(){
+        document.querySelectorAll('.filters .chip').forEach(function(x){x.classList.remove('active')});
+        c.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
