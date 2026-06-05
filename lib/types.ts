@@ -43,6 +43,8 @@ export type BriefDoc = {
   sections: BriefSection[]; // body, rendered to markdown
   radar?: string; // "on the radar" one-liner
   leadStory?: { title: string; source: string; url: string };
+  /** Direct links to the top-ranked stories, rendered as a clickable list. */
+  topLinks: { title: string; source: string; url: string }[];
   source: "tailored" | "fallback"; // Claude-written vs deterministic
   counts: { total: number; brad: number };
   generatedAt: string; // ISO

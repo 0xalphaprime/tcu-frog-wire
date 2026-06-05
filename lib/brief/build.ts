@@ -14,15 +14,11 @@ function evergreen(date: string, nextGame: NextGame | undefined, now: number): B
   return {
     date,
     oneLiner: nextGame
-      ? `Quiet day for Frog football — ${nextGame.daysUntil} days until ${nextGame.opponent} in Dublin.`
+      ? `Quiet day for Frog football — ${nextGame.daysUntil} days until ${nextGame.opponent}.`
       : "Quiet day for Frog football.",
-    sections: [
-      {
-        heading: "On the radar",
-        bullets: [{ text: radar, emphasis: false }],
-      },
-    ],
+    sections: [],
     radar,
+    topLinks: [],
     source: "fallback",
     counts: { total: 0, brad: 0 },
     generatedAt: new Date(now).toISOString(),
@@ -42,6 +38,13 @@ export async function buildBrief(
   const facts = extractFacts(date, ranked, nextGame, now);
   const bradCount = facts.bradCount;
   const leadStory = { title: lead.title, source: lead.source, url: lead.url };
+  // Direct links to the top-ranked stories — rendered as a clickable list under
+  // the brief, for both the AI and deterministic versions.
+  const topLinks = ranked.pool.slice(0, 5).map((it) => ({
+    title: it.title,
+    source: it.source,
+    url: it.url,
+  }));
 
   // 1) Try Claude.
   const narrative = await generateNarrative(facts);
@@ -52,22 +55,16 @@ export async function buildBrief(
       sections: narrative.sections,
       radar: narrative.radar,
       leadStory,
+      topLinks,
       source: "tailored",
       counts: { total: ranked.pool.length, brad: bradCount },
       generatedAt: new Date(now).toISOString(),
     };
   }
 
-  // 2) Deterministic fallback over the same facts.
-  const sections: BriefSection[] = [
-    {
-      heading: "Top stories",
-      bullets: ranked.pool.slice(0, 5).map((it, i) => ({
-        text: `${it.title} — ${it.source}`,
-        emphasis: i === 0,
-      })),
-    },
-  ];
+  // 2) Deterministic fallback over the same facts. The top stories are the
+  // clickable topLinks list; here we add only the prose beats (Brad watch).
+  const sections: BriefSection[] = [];
   if (bradCount > 0) {
     sections.push({
       heading: "Brad watch",
@@ -87,6 +84,7 @@ export async function buildBrief(
     sections,
     radar,
     leadStory,
+    topLinks,
     source: "fallback",
     counts: { total: ranked.pool.length, brad: bradCount },
     generatedAt: new Date(now).toISOString(),

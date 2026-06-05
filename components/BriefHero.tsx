@@ -15,6 +15,7 @@ function formatDate(date: string): string {
 }
 
 export function BriefHero({ brief, game }: { brief: BriefDoc; game?: NextGame }) {
+  const topLinks = brief.topLinks ?? [];
   return (
     <section className="mx-auto max-w-4xl px-5 sm:px-8">
       <div className="relative overflow-hidden rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/15 to-accent/[0.04] px-5 pb-5 pt-5 shadow-[0_8px_40px_-10px_rgba(139,92,246,0.35)]">
@@ -61,6 +62,36 @@ export function BriefHero({ brief, game }: { brief: BriefDoc; game?: NextGame })
               {briefToMarkdown(brief)}
             </ReactMarkdown>
           </div>
+
+          {topLinks.length > 0 ? (
+            <div className="relative mt-3 border-t border-edge/70 pt-3">
+              <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-accent-hover">
+                Top stories
+              </div>
+              <ol className="space-y-2">
+                {topLinks.map((s, i) => (
+                  <li key={i}>
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-baseline gap-2"
+                    >
+                      <span className="font-mono text-[11px] leading-5 text-muted">
+                        {i + 1}
+                      </span>
+                      <span className="text-sm font-semibold text-ink underline-offset-2 transition-colors group-hover:text-accent-hover group-hover:underline">
+                        {s.title}
+                      </span>
+                      <span className="shrink-0 text-[11px] leading-5 text-muted">
+                        · {s.source}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ) : null}
         </div>
       </div>
 
