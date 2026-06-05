@@ -15,7 +15,15 @@ function formatDate(date: string): string {
   }).format(d);
 }
 
-export function BriefHero({ brief, schedule }: { brief: BriefDoc; schedule: NextGame[] }) {
+export function BriefHero({
+  brief,
+  schedule,
+  sameTab = false,
+}: {
+  brief: BriefDoc;
+  schedule: NextGame[];
+  sameTab?: boolean;
+}) {
   const topLinks = brief.topLinks ?? [];
   const game = schedule.find((g) => g.isNext);
   return (
@@ -75,8 +83,8 @@ export function BriefHero({ brief, schedule }: { brief: BriefDoc; schedule: Next
                   <li key={i}>
                     <a
                       href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target={sameTab ? undefined : "_blank"}
+                      rel={sameTab ? undefined : "noopener noreferrer"}
                       className="group flex items-baseline gap-2"
                     >
                       <span className="font-mono text-[11px] leading-5 text-muted">

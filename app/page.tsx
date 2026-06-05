@@ -7,6 +7,7 @@ import { ensureSeeded, getItems } from "@/lib/store";
 import { fullSchedule } from "@/lib/nextGame";
 import { hotness } from "@/lib/util";
 import type { WireItem } from "@/lib/types";
+import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -39,6 +40,11 @@ export default async function Home({
     ? (params.f as FilterKey)
     : "hot";
 
+  // On phones, open article links in the SAME tab — new tabs pile up on mobile.
+  // Desktop keeps new-tab (multiple tabs are handy there).
+  const ua = (await headers()).get("user-agent") ?? "";
+  const sameTab = /Mobi|Android|iPhone|iPad|iPod|Windows Phone|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+
   await ensureSeeded();
   const schedule = fullSchedule();
   const [brief, allItems] = await Promise.all([getOrBuildTodayBrief(), getItems()]);
@@ -55,11 +61,11 @@ export default async function Home({
     <div className="min-h-screen">
       <Header />
       <main className="pt-2">
-        <BriefHero brief={brief} schedule={schedule} />
+        <BriefHero brief={brief} schedule={schedule} sameTab={sameTab} />
         <div className="mt-5">
           <FilterChips active={active} />
         </div>
-        <Wire items={items} sort={sort} />
+        <Wire items={items} sort={sort} sameTab={sameTab} />
       </main>
       <footer className="px-5 pb-12 text-center text-xs text-muted">
         <div className="mx-auto max-w-4xl">

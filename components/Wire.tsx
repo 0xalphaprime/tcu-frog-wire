@@ -1,7 +1,15 @@
 import type { WireItem } from "@/lib/types";
 import { ArticleTile } from "@/components/ArticleTile";
 
-export function Wire({ items, sort }: { items: WireItem[]; sort: "hot" | "new" }) {
+export function Wire({
+  items,
+  sort,
+  sameTab = false,
+}: {
+  items: WireItem[];
+  sort: "hot" | "new";
+  sameTab?: boolean;
+}) {
   return (
     <section className="mx-auto max-w-4xl px-5 pb-16 sm:px-8">
       <div className="mb-3 mt-6 flex items-center justify-between px-0.5">
@@ -22,7 +30,12 @@ export function Wire({ items, sort }: { items: WireItem[]; sort: "hot" | "new" }
       ) : (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {items.map((item, i) => (
-            <ArticleTile key={item.id} item={item} feature={sort === "hot" && i === 0} />
+            <ArticleTile
+              key={item.id}
+              item={item}
+              feature={sort === "hot" && i === 0}
+              sameTab={sameTab}
+            />
           ))}
         </div>
       )}

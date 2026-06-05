@@ -6,9 +6,11 @@ import { Thumb } from "@/components/Thumb";
 export function ArticleTile({
   item,
   feature = false,
+  sameTab = false,
 }: {
   item: WireItem;
   feature?: boolean;
+  sameTab?: boolean;
 }) {
   const hasImage = isUsableThumbnail(item.thumbnail);
   // The big hero treatment is reserved for the hottest story *that has an image* —
@@ -31,8 +33,8 @@ export function ArticleTile({
     >
       <a
         href={item.url}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={sameTab ? undefined : "_blank"}
+        rel={sameTab ? undefined : "noopener noreferrer"}
         className="flex flex-1 flex-col"
       >
         {hasImage ? (
