@@ -10,7 +10,7 @@ const SCHEDULE: Array<Omit<NextGame, "daysUntil">> = [
     opponent: "North Carolina",
     date: "2026-08-29T16:00:00Z",
     venue: "Aviva Stadium, Dublin 🇮🇪",
-    note: "Aer Lingus Classic · Belichick's UNC debut · first-ever Week Zero",
+    note: "Aer Lingus Classic · Belichick's UNC · TCU's first-ever Week Zero",
   },
   // add the rest of the 2026 slate here…
 ];
