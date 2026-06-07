@@ -3,16 +3,16 @@ import Link from "next/link";
 export type FilterKey =
   | "hot"
   | "new"
-  | "brad"
+  | "coaches"
   | "offense"
   | "recruiting"
   | "schedule"
   | "official";
 
-export const FILTERS: { key: FilterKey; label: string; brad?: boolean }[] = [
+export const FILTERS: { key: FilterKey; label: string; star?: boolean }[] = [
   { key: "hot", label: "🔥 Hottest" },
   { key: "new", label: "🕐 Newest" },
-  { key: "brad", label: "⭐ Brad tracker", brad: true },
+  { key: "coaches", label: "⭐ Coaches", star: true },
   { key: "offense", label: "Offense" },
   { key: "recruiting", label: "Recruiting" },
   { key: "schedule", label: "Schedule" },
@@ -27,7 +27,7 @@ export function FilterChips({ active }: { active: FilterKey }) {
           const on = f.key === active;
           const base =
             "flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border px-4 text-sm font-semibold whitespace-nowrap transition-colors";
-          const cls = f.brad
+          const cls = f.star
             ? on
               ? "bg-gold text-bg border-gold"
               : "border-gold/45 text-gold hover:border-gold"

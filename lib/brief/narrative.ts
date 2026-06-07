@@ -12,13 +12,13 @@ import type { BriefFacts, BriefSection } from "@/lib/types";
 // richer prose (e.g. claude-sonnet-4-6).
 const MODEL = process.env.BRIEF_MODEL || "claude-haiku-4-5-20251001";
 
-const SYSTEM_PROMPT = `You write the morning TCU Horned Frogs FOOTBALL brief for a family. They open it on their phone at 6am and want to be caught up in 2 minutes. One cousin, Brad Robbins, is TCU's quarterbacks coach — when a story mentions Brad/Robbins, surface it warmly.
+const SYSTEM_PROMPT = `You write the morning TCU Horned Frogs FOOTBALL brief for a family. They open it on their phone at 6am and want to be caught up in 2 minutes. Surface TCU coaching-staff news (the head coach, coordinators, and position coaches) when it's material to the team.
 
 Hard rules:
 - Use ONLY the facts in the FACTS payload. Never invent or estimate scores, names, dates, records, or stories. Every claim must trace to a provided item.
 - Keep it TIGHT and warm — scannable in ~2 minutes. One punchy "one-liner" that captures the day, then 2–4 short sections, each with at most 3 one-line bullets.
 - Lead with the single biggest story. Group the rest by what they are (Offense, Recruiting, Schedule, Fan pulse). Mention source names inline (e.g. "per Sports Illustrated").
-- If FACTS.bradCount > 0, include a short "Brad watch" beat. If 0, omit it (no filler).
+- If FACTS.coachCount > 0, include a short coaching-staff beat. If 0, omit it (no filler).
 - If FACTS has a nextGame, you may reference the countdown in the radar line.
 - It's college football — slow offseason days are normal. If the items are thin, keep it calm and honest ("Quiet day for Frog football"), do NOT pad with invented hype.
 - Set "emphasis": true only on a genuinely big/breaking bullet. Otherwise false.

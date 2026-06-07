@@ -20,7 +20,7 @@ export function ArticleTile({
   const badges = (
     <>
       {feature ? <Badge tone="breaking">🔥 Hot</Badge> : null}
-      {item.bradMention ? <Badge tone="gold">⭐ Brad</Badge> : null}
+      {item.coachMention ? <Badge tone="gold">⭐ Coach</Badge> : null}
       {item.official ? <Badge tone="official">Official</Badge> : null}
     </>
   );

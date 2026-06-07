@@ -15,8 +15,8 @@ const VALID = new Set<FilterKey>(FILTERS.map((f) => f.key));
 
 function applyFilter(items: WireItem[], active: FilterKey): WireItem[] {
   switch (active) {
-    case "brad":
-      return items.filter((i) => i.bradMention);
+    case "coaches":
+      return items.filter((i) => i.coachMention);
     case "official":
       return items.filter((i) => i.official);
     case "offense":

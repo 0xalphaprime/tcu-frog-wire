@@ -16,7 +16,7 @@ import {
   excerptOf,
   hashId,
   isFootball,
-  mentionsBrad,
+  mentionsCoach,
   sourceWeight,
 } from "@/lib/util";
 
@@ -87,7 +87,7 @@ export async function fetchGoogleNews(feed = process.env.GOOGLE_NEWS_FEED || DEF
       firstSeenAt: new Date().toISOString(),
       score: 0,
       official: /tcu athletics|gofrogs/i.test(src),
-      bradMention: mentionsBrad(text),
+      coachMention: mentionsCoach(text),
     });
   }
   return items;

@@ -41,7 +41,7 @@ npm run typecheck   # tsc --noEmit — the canary (no test suite)
   `WireItem[]`; add YouTube RSS / Reddit-OAuth as new entries in `SOURCES`.
 - **Daily brief** (`lib/brief/*`): rank facts → **Claude writes it** → **deterministic fallback**
   on any failure (the cron never depends on the API) → calm evergreen brief on a zero-news day.
-- **UI** (`app/page.tsx`): brief hero + next-game countdown, filter chips (incl. ⭐ Brad tracker),
+- **UI** (`app/page.tsx`): brief hero + next-game countdown, filter chips (incl. ⭐ Coaches),
   and the Wire — a `grid-cols-1 sm:grid-cols-2` tile feed sorted by hotness.
 
 ## Endpoints

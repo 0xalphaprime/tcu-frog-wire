@@ -25,7 +25,7 @@ export type WireItem = {
   /** Social signal (e.g. Reddit upvotes); 0 when none. Ranking input only. */
   score: number;
   official?: boolean; // from TCU Athletics / verified official source
-  bradMention?: boolean; // mentions cousin Brad Robbins
+  coachMention?: boolean; // mentions TCU coaching staff
   /** Distinct sources covering this (merged) story. 1 = single source. */
   corroboration?: number;
   /** Other outlets that ran the same story (canonical is the highest-weight one). */
@@ -46,7 +46,7 @@ export type BriefDoc = {
   /** Direct links to the top-ranked stories, rendered as a clickable list. */
   topLinks: { title: string; source: string; url: string }[];
   source: "tailored" | "fallback"; // Claude-written vs deterministic
-  counts: { total: number; brad: number };
+  counts: { total: number; coach: number };
   generatedAt: string; // ISO
 };
 
@@ -61,11 +61,11 @@ export type BriefFacts = {
     ageHours: number;
     score: number;
     official: boolean;
-    brad: boolean;
+    coach: boolean;
   }[];
   hottest: { title: string; source: string }[];
   byTopic: { topic: string; count: number }[];
-  bradCount: number;
+  coachCount: number;
   nextGame?: NextGame;
 };
 

@@ -56,10 +56,10 @@ export function BriefHero({
             <span>
               <b className="text-ink">{brief.counts.total}</b> stories in the window
             </span>
-            {brief.counts.brad > 0 ? (
+            {brief.counts.coach > 0 ? (
               <span>
-                <b className="text-gold">{brief.counts.brad}</b> Brad mention
-                {brief.counts.brad === 1 ? "" : "s"}
+                <b className="text-gold">{brief.counts.coach}</b> coaching note
+                {brief.counts.coach === 1 ? "" : "s"}
               </span>
             ) : null}
             <span className="uppercase tracking-wide">

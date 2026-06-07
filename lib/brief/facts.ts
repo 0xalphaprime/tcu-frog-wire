@@ -50,13 +50,13 @@ export function extractFacts(
       ageHours: Math.round(ageHours(it.publishedAt, now)),
       score: it.score,
       official: Boolean(it.official),
-      brad: Boolean(it.bradMention),
+      coach: Boolean(it.coachMention),
     })),
     hottest: pool.slice(0, 5).map((it) => ({ title: it.title, source: it.source })),
     byTopic: [...topicCounts.entries()]
       .map(([topic, count]) => ({ topic, count }))
       .sort((a, b) => b.count - a.count),
-    bradCount: pool.filter((it) => it.bradMention).length,
+    coachCount: pool.filter((it) => it.coachMention).length,
     nextGame,
   };
 }

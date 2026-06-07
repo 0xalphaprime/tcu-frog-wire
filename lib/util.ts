@@ -205,8 +205,9 @@ export function classifyTopic(text: string): string | undefined {
   return undefined;
 }
 
-export function mentionsBrad(text: string): boolean {
-  return /\brobbins\b/i.test(text);
+export function mentionsCoach(text: string): boolean {
+  // TCU coaching-staff surnames — surfaces coaching-staff news generally.
+  return /\b(dykes|sammis|robbins)\b/i.test(text);
 }
 
 const OTHER_SPORT =

@@ -33,7 +33,7 @@ accent (brightened to `#8B5CF6` for legibility on near-black):
   --accent-hover:#A78BFA;
   --accent-deep:#4D1979; /* the official purple, for brand chrome */
   --border:#2C2440;
-  --gold:#F9D44B;        /* top-story / "Brad" marker, used sparingly */
+  --gold:#F9D44B;        /* top-story / coaching marker, used sparingly */
   --red:#E5484D;         /* breaking only */
   --green:#3FB950;       /* "official" source badge */
 }
@@ -93,7 +93,7 @@ Some feeds (esp. Frogs O' War) deliver **full article text**. We never persist o
 **Now**
 - Home = daily brief hero (the "one-line read" + next-game countdown) + the Wire (deduped tiles).
 - Filter chips: Hottest / Newest / Offense / Recruiting / Schedule / Official.
-- **Brad tracker** — a saved keyword filter that highlights any "Robbins" mention.
+- **Coaches** — a filter that highlights TCU coaching-staff news.
 - **Cross-source merge** — the same story from multiple outlets collapses into one tile, tagged
   "+N more outlets" (corroboration also nudges the hotness ranking).
 - Installable PWA.
@@ -152,7 +152,7 @@ ranking uses recency + source trust + corroboration (+ external Reddit buzz once
 
 1. ✅ Scaffold + TCU theme + PWA.
 2. ✅ Ingest (Google News + Frogs O' War) → normalize → merge → Redis; source health.
-3. ✅ The Wire UI — tiles, filter chips, Brad tracker.
+3. ✅ The Wire UI — tiles, filter chips, Coaches filter.
 4. ✅ Daily brief — fact digest → Claude → deterministic fallback → evergreen empty-state.
 5. ☐ YouTube + Reddit sources; Google News URL resolution.
 6. ☐ PWA push + share-to-text; weekly recap; archive search.

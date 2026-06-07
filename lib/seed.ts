@@ -12,7 +12,7 @@ import {
   classifyTopic,
   excerptOf,
   hashId,
-  mentionsBrad,
+  mentionsCoach,
   sourceWeight,
 } from "@/lib/util";
 
@@ -101,7 +101,7 @@ export function buildSeedItems(now = Date.now()): WireItem[] {
       firstSeenAt: publishedAt,
       score: s.score ?? 0,
       official: s.official,
-      bradMention: mentionsBrad(text),
+      coachMention: mentionsCoach(text),
     } satisfies WireItem;
   });
 }

@@ -20,7 +20,7 @@ function evergreen(date: string, nextGame: NextGame | undefined, now: number): B
     radar,
     topLinks: [],
     source: "fallback",
-    counts: { total: 0, brad: 0 },
+    counts: { total: 0, coach: 0 },
     generatedAt: new Date(now).toISOString(),
   };
 }
@@ -36,7 +36,7 @@ export async function buildBrief(
 
   const lead = ranked.pool[0];
   const facts = extractFacts(date, ranked, nextGame, now);
-  const bradCount = facts.bradCount;
+  const coachCount = facts.coachCount;
   const leadStory = { title: lead.title, source: lead.source, url: lead.url };
   // Direct links to the top-ranked stories — rendered as a clickable list under
   // the brief, for both the AI and deterministic versions.
@@ -57,19 +57,19 @@ export async function buildBrief(
       leadStory,
       topLinks,
       source: "tailored",
-      counts: { total: ranked.pool.length, brad: bradCount },
+      counts: { total: ranked.pool.length, coach: coachCount },
       generatedAt: new Date(now).toISOString(),
     };
   }
 
   // 2) Deterministic fallback over the same facts. The top stories are the
-  // clickable topLinks list; here we add only the prose beats (Brad watch).
+  // clickable topLinks list; here we add only the prose beats (Coaching staff).
   const sections: BriefSection[] = [];
-  if (bradCount > 0) {
+  if (coachCount > 0) {
     sections.push({
-      heading: "Brad watch",
+      heading: "Coaching staff",
       bullets: ranked.pool
-        .filter((it) => it.bradMention)
+        .filter((it) => it.coachMention)
         .slice(0, 3)
         .map((it) => ({ text: `${it.title} — ${it.source}`, emphasis: false })),
     });
@@ -86,7 +86,7 @@ export async function buildBrief(
     leadStory,
     topLinks,
     source: "fallback",
-    counts: { total: ranked.pool.length, brad: bradCount },
+    counts: { total: ranked.pool.length, coach: coachCount },
     generatedAt: new Date(now).toISOString(),
   };
 }

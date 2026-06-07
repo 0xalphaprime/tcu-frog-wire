@@ -16,7 +16,7 @@ import {
   hashId,
   isFootball,
   isUsableThumbnail,
-  mentionsBrad,
+  mentionsCoach,
   sourceWeight,
 } from "@/lib/util";
 
@@ -120,7 +120,7 @@ export async function fetchFrogsOWar(feed = FEED): Promise<WireItem[]> {
       firstSeenAt: new Date().toISOString(),
       score: 0,
       official: false,
-      bradMention: mentionsBrad(text),
+      coachMention: mentionsCoach(text),
     });
   }
   return items;
