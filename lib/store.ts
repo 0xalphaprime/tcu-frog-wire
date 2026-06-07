@@ -7,6 +7,7 @@
 import type { BriefDoc, SourceHealth, WireItem } from "@/lib/types";
 import { getRedis } from "@/lib/redis";
 import { buildSeedItems } from "@/lib/seed";
+import { mergeByFingerprint } from "@/lib/util";
 
 const ITEMS_KEY = "frogwire:items";
 const BRIEF_KEY = (date: string) => `frogwire:brief:${date}`;
@@ -40,11 +41,12 @@ function prune(items: WireItem[], now = Date.now()): WireItem[] {
 
 export async function getItems(): Promise<WireItem[]> {
   const redis = getRedis();
-  if (redis) {
-    const items = (await redis.get<WireItem[]>(ITEMS_KEY)) ?? [];
-    return prune(items);
-  }
-  return prune([...mem.items.values()]);
+  const raw = redis
+    ? ((await redis.get<WireItem[]>(ITEMS_KEY)) ?? [])
+    : [...mem.items.values()];
+  // Collapse the same story across sources AND across ingest runs (the batch-only
+  // merge in ingest missed cross-run duplicates that accumulate over 14 days).
+  return mergeByFingerprint(prune(raw));
 }
 
 /** Insert new items, update score/excerpt on existing ones. Returns counts. */

@@ -6,10 +6,10 @@ export function Header() {
           <span className="h-6 w-6 shrink-0 rounded-full bg-accent shadow-[0_0_24px_rgba(139,92,246,0.65)]" />
           <span className="flex flex-col leading-none">
             <span className="text-lg font-extrabold uppercase tracking-[0.14em]">
-              Frog Wire
+              Frog Blog
             </span>
             <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">
-              robbins.coach
+              TCU Football
             </span>
           </span>
         </div>

@@ -1,6 +1,6 @@
-# Frog Wire — robbins.coach
+# Frog Blog
 
-A daily **TCU Horned Frogs football** brief + news wire for the Robbins family.
+A daily **TCU Horned Frogs football** brief + news wire for the family.
 Wake up to a 2-minute catch-up, then scroll the hottest stories on your phone.
 
 Modern, lean stack: **Next.js 16 · React 19 · Tailwind v4 · Anthropic Claude · Upstash
@@ -59,8 +59,8 @@ is used transiently to feed Claude, then discarded — never persisted. Enforced
 
 ## Deploy
 
-Push to a Vercel project, set the env vars (incl. `CRON_SECRET`), point a subdomain
-(`tcu.robbins.coach`) at it. On Vercel Pro the `*/5` ingest cron runs as scheduled; on the
+Push to a Vercel project, set the env vars (incl. `CRON_SECRET`), point a subdomain of
+your choice at it. On Vercel Pro the `*/5` ingest cron runs as scheduled; on the
 Hobby tier (cron caps at once/day) drop the `*/5` ingest entry from `vercel.json` and rely on
 the daily-brief cron + the "Refresh now" button.
 

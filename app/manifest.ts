@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Frog Wire — TCU football daily",
-    short_name: "Frog Wire",
+    name: "Frog Blog — TCU football daily",
+    short_name: "Frog Blog",
     description:
       "A daily TCU Horned Frogs football brief + news wire for the family. Caught up in 2 minutes.",
     start_url: "/",

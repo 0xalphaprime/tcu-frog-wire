@@ -15,12 +15,12 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Frog Wire — TCU football, every morning",
+  title: "Frog Blog — TCU football, every morning",
   description:
     "A daily TCU Horned Frogs football brief + news wire for the family. Caught up in 2 minutes.",
   appleWebApp: {
     capable: true,
-    title: "Frog Wire",
+    title: "Frog Blog",
     statusBarStyle: "black-translucent",
   },
 };

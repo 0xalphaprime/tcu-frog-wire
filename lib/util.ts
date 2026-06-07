@@ -154,9 +154,12 @@ export function mergeByFingerprint(items: WireItem[], now = Date.now()): WireIte
   for (const it of ordered) {
     const toks = titleTokens(it.title);
     const t = Date.parse(it.publishedAt);
-    const hit = clusters.find(
-      (c) => Math.abs(t - c.t) <= 36 * 3_600_000 && jaccard(toks, c.toks) >= 0.8,
-    );
+    const hit = clusters.find((c) => {
+      const j = jaccard(toks, c.toks);
+      // Near-identical titles are the same article regardless of timestamp;
+      // looser matches must fall within a ~5-day news cycle.
+      return j >= 0.85 || (j >= 0.6 && Math.abs(t - c.t) <= 120 * 3_600_000);
+    });
     if (hit) hit.items.push(it);
     else clusters.push({ items: [it], toks, t });
   }

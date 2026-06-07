@@ -1,9 +1,9 @@
-# Frog Wire — design notes
+# Frog Blog — design notes
 
 **A daily TCU Horned Frogs football brief + news wire.**
 Wake up to a fresh 2-minute catch-up, then scroll the hottest stories on your phone.
 
-Frog Wire is a small, modern web app: a home page that opens with an auto-generated daily
+Frog Blog is a small, modern web app: a home page that opens with an auto-generated daily
 **brief** (a 2-minute "where TCU sits / what's hot" read), followed by **the Wire** — a
 scrollable, filterable feed of the hottest TCU football articles aggregated from across the web,
 deduped and ranked. It's an installable PWA, so it lives on your phone's home screen.
@@ -159,6 +159,6 @@ ranking uses recency + source trust + corroboration (+ external Reddit buzz once
 7. ☐ Deploy + custom subdomain.
 
 ## Open questions
-- Name: "Frog Wire," or something else?
-- Subdomain: `tcu.robbins.coach`? `frogs.robbins.coach`? `wire.robbins.coach`?
+- Name: "Frog Blog," or something else?
+- Subdomain: a subdomain of your choice.
 - Scope: football-only, or expand to all TCU sports later?

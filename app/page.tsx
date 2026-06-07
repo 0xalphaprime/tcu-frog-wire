@@ -75,11 +75,11 @@ export default async function Home({
           >
             ↻ Refresh now
           </a>
-          <p className="mt-4">Frog Wire · robbins.coach · updated daily at 4:00 AM CT</p>
+          <p className="mt-4">Frog Blog · updated daily at 4:00 AM CT</p>
           <p className="mx-auto mt-1.5 max-w-prose text-[11px] text-muted/70">
-            An unofficial fan site for the Robbins family. Not affiliated with,
-            endorsed by, or sponsored by Texas Christian University. All articles
-            link to and credit their original publishers.
+            An unofficial fan site. Not affiliated with, endorsed by, or sponsored
+            by Texas Christian University. All articles link to and credit their
+            original publishers.
           </p>
         </div>
       </footer>
